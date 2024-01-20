@@ -79,4 +79,22 @@ export const login=asyncHandler( async(req,res)=>{
   if(!user) throw new ApiError(500,"Error While Updating Database");
  // Setting Cookies and Sending Response
   res.status(200).cookie("refreshToken",refreshToken,options).cookie("accessToken",accessToken,options).json(new ApiResponse(200,user,"Login Successfully"));
-})
+});
+
+
+export const logout=asyncHandler(async(req,res)=>{
+  const {_id}=req.user;
+// Removing RefreshToken into DB
+  const user=await User.findByIdAndUpdate(_id,{
+    refreshToken:undefined
+  },{new: true})
+
+  if(!user)  throw new ApiError(500,"Server Busy");
+
+// Clearing Cookies
+  res.status(200)
+  .clearCookie("refreshToken",options)
+  .clearCookie("accessToken",options)
+  .json(new ApiResponse(200,{},"Logout Success"));
+
+});
