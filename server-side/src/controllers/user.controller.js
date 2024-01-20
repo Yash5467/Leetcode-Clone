@@ -3,7 +3,10 @@ import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.models.js";
 import { fileUpload } from "../utils/FileUpload.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-
+const options={
+  httpOnly:true,
+  secure: true
+}
 export const signup = asyncHandler(async (req, res) => {
   const { userName, fullName, email, password } = req.body;
   // Checking if Fields Are Not Filled
@@ -48,3 +51,32 @@ export const signup = asyncHandler(async (req, res) => {
   // Sending Response
   res.status(200).json(new ApiResponse(200, user, "User SignUp Successfully"));
 });
+
+
+
+export const login=asyncHandler( async(req,res)=>{
+  const {email,password}=req.body;
+  if(!email || !password) throw new ApiError(401,"Email and Password Are Required");
+
+  const userValidation=await User.findOne({
+    $or:[{email}]
+  });
+
+  if(!userValidation) throw new ApiError(400,"User Not Exist");
+
+  const passwordVerification=await userValidation.isPasswordCorrect({password});
+
+  if(!passwordVerification) throw new ApiError(400,"Incorrect Password");
+
+  const accessToken=userValidation.generateAccessToken();
+  const refreshToken=userValidation.generateRefreshToken();
+
+  const user=await User.findByIdAndUpdate(userValidation._id,{
+    refreshToken:refreshToken
+  }).select("-password -refreshToken");
+
+
+  if(!user) throw new ApiError(500,"Error While Updating Database");
+
+  res.status(200).cookie("refreshToken",refreshToken,options).cookie("accessToken",accessToken,options).json(new ApiResponse(200,user,"Login Successfully"));
+})
