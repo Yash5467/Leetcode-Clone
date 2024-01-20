@@ -53,30 +53,30 @@ export const signup = asyncHandler(async (req, res) => {
 });
 
 
-
+// User Login
 export const login=asyncHandler( async(req,res)=>{
   const {email,password}=req.body;
+  // Checking fileds
   if(!email || !password) throw new ApiError(401,"Email and Password Are Required");
-
+ // Checking User in DB
   const userValidation=await User.findOne({
     $or:[{email}]
   });
 
   if(!userValidation) throw new ApiError(400,"User Not Exist");
-
+ // Checking Passowrd
   const passwordVerification=await userValidation.isPasswordCorrect({password});
 
   if(!passwordVerification) throw new ApiError(400,"Incorrect Password");
-
+// Generating Access and Refresh Tokens
   const accessToken=userValidation.generateAccessToken();
   const refreshToken=userValidation.generateRefreshToken();
-
+  // Inserting RefreshToken into DB
   const user=await User.findByIdAndUpdate(userValidation._id,{
     refreshToken:refreshToken
   }).select("-password -refreshToken");
 
-
   if(!user) throw new ApiError(500,"Error While Updating Database");
-
+ // Setting Cookies and Sending Response
   res.status(200).cookie("refreshToken",refreshToken,options).cookie("accessToken",accessToken,options).json(new ApiResponse(200,user,"Login Successfully"));
 })
