@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUser, login, logout, signup } from "../controllers/user.controller.js";
+import { changePassoword, getUser, login, logout, signup } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middilewares/verifyjwt.middieware.js";
 
 
@@ -8,6 +8,8 @@ import { verifyJWT } from "../middilewares/verifyjwt.middieware.js";
  userRouter.route("/signup").post(signup);
  // login route
  userRouter.route("/login").post(login);
+ // resetPassoword route 
+ userRouter.route("/reset-password").post(changePassoword);
 
 // * protected routes
 // logout route

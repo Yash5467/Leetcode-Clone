@@ -110,4 +110,31 @@ export const getUser=asyncHandler(async(req,res)=>{
   if(!user) throw new ApiError(401,"User Not Exists");
 
   res.status(200).json(new ApiResponse(200,user,"User Exists"));
-})
+});
+
+
+export const changePassoword=asyncHandler(async(req,res)=>{
+  const {oldPassword,newpassword,conformPassword,email}=req.body;
+  // Checking Required Fields
+    if(oldPassword || newpassword || conformPassword || email )throw new ApiError(401,"Fields are required");
+
+  if(newpassword!=conformPassword) throw new ApiError(401,"Password Mismatch");
+ // Finding User with email
+  const user=await User.findOne({email:email});
+
+  if(!user) throw new ApiError(401,"User Not Exists");
+ // Checking Old Password
+  const passwordVerification=await user.isPasswordCorrect(oldPassword);
+ 
+  if(!passwordVerification) throw new ApiError(401,"Incorrect Password");
+
+ // Updating Password
+  const newUser=await User.findByIdAndUpdate(user._id,{
+    password:newpassword
+  },{new: true}).select("-passoword -refreshToken");
+
+  if(!newUser) throw new ApiError(500,"Error Occured");
+
+  res.status(201)
+  .json(new ApiResponse(201,newUser,"Passowrd Updated Successfully"));
+});
