@@ -98,3 +98,16 @@ export const logout=asyncHandler(async(req,res)=>{
   .json(new ApiResponse(200,{},"Logout Success"));
 
 });
+
+
+export const getUser=asyncHandler(async(req,res)=>{
+  const {_id}=req.user;
+
+  if(_id) throw new ApiError(401,"Log In First");
+
+  const user=await User.findById(_id);
+
+  if(!user) throw new ApiError(401,"User Not Exists");
+
+  res.status(200).json(new ApiResponse(200,user,"User Exists"));
+})
