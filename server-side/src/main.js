@@ -11,6 +11,7 @@ const app=express();
 
 // handling CORS
 app.use(cors({
+    credentials:true,
     origin: process.env.CLIENT_SIDE_ENDPOINT,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     preflightContinue: false,
