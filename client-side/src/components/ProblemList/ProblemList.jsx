@@ -3,20 +3,24 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleUp,
-  faArrowAltCircleUp,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "../component";
+import { useNavigate } from "react-router-dom";
 
 function ProblemList() {
   const [problemList, setProblemList] = useState([]);
   const [isDifficulty, setIsDifficulty] = useState(false);
   const [sorting, setSorting] = useState(null);
+  const navigate=useNavigate();
   const difficulty = [
     { tittle: "Easy" },
     { tittle: "Medium" },
     { tittle: "Hard" },
   ];
+  const navigator=(path)=>{
+    navigate(path);
+  }
   const sortProblems = (key) => {
     const previousProblems = [...problemList];
     previousProblems.sort((a, b) => {
@@ -118,6 +122,8 @@ function ProblemList() {
                 <tr
                   key={index}
                   className="odd:bg-white odd:dark:bg-dark-layer-2 even:bg-dark-fill-3 even:dark:bg-dark-fill-3 "
+                  onClick={()=>navigate(problem._id)}
+                 
                 >
                   <th
                     scope="row"
