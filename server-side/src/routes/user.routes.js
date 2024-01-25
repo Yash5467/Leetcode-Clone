@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { changePassoword, getUser, login, logout, signup } from "../controllers/user.controller.js";
+import { changePassoword, getUser, login, logout, signup, verifyLogin } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middilewares/verifyjwt.middieware.js";
 
 
@@ -17,7 +17,7 @@ userRouter.route("/logout").post(verifyJWT,logout);
 // Get User Profile Route
 userRouter.route("/get-user").get(verifyJWT,getUser);
 
-
+userRouter.route("/verify-login").get(verifyJWT,verifyLogin);
 
 
 

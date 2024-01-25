@@ -19,4 +19,17 @@ export const getProblem=asyncHandler(async(req,res)=>{
     if(!problem) throw new ApiError(500,"Error Occured While Getting Problem");
 
     res.status(200).json(new ApiResponse(200,problem,"Problem Recived Successfully"));
-})
+});
+
+export const searchProblem=asyncHandler(async(req,res)=>{
+    const {searchKey}=req.body;
+
+    if(!searchKey){
+        getAllProblems(req,res);
+        return;
+    }
+    
+    const problems=await Problem.find({$text:{$search:searchKey}});
+
+    res.status(200).json(new ApiResponse(200,problems,"Problems Find"));
+});

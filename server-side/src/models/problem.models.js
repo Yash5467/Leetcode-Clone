@@ -38,5 +38,5 @@ const problemSchema=new mongoose.Schema({
     ]
 
 },{timestamps: true});
-
+problemSchema.index({"tittle":"text"})
 export const Problem=mongoose.model("Problem",problemSchema);

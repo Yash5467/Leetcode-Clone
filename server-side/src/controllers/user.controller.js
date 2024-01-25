@@ -138,3 +138,11 @@ export const changePassoword=asyncHandler(async(req,res)=>{
   res.status(201)
   .json(new ApiResponse(201,newUser,"Passowrd Updated Successfully"));
 });
+
+export const verifyLogin=asyncHandler((req,res)=>{
+   
+res
+.status(200)
+.json(new ApiResponse(200,req.user,"Verified User"));
+
+})
