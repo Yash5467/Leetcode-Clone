@@ -23,7 +23,6 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     avatar: {
-      required: true,
       type: String,
     },
     progress: {

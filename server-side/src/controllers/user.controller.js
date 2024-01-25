@@ -18,8 +18,6 @@ export const signup = asyncHandler(async (req, res) => {
   });
   const avatarLocalPath = req.file?.path;
 
-  if (!avatarLocalPath) throw new ApiError(404, "Avatar Required");
-
   if (userCheck) throw new ApiError(404, "Email or UserName Already Exists");
 
   // Email Validation
@@ -31,16 +29,16 @@ export const signup = asyncHandler(async (req, res) => {
   if (emailValidator.status === "invalid")
     throw new ApiError(401, "Invalid Email Address");
   // Uploading Avatar to Cloudinary
-  const avatar = await fileUpload(avatarLocalPath);
+  const avatar = avatarLocalPath? await fileUpload(avatarLocalPath).url:""
 
-  if (!avatar) throw new ApiError(500, "Error While Uploading Avatar");
+  
   // Creating new user
   const newUser = await User.create({
     userName,
     fullName,
     email,
     password,
-    avatar: avatar.url,
+    avatar: avatar
   });
   // Checking User Created or not
   const user = await User.findById(newUser._id).select(
