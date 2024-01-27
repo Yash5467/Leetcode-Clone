@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.models.js";
 import { fileUpload } from "../utils/FileUpload.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { Progress } from "../models/progress.models.js";
 const options={
   httpOnly:true,
   secure: true
@@ -44,9 +45,13 @@ export const signup = asyncHandler(async (req, res) => {
   const user = await User.findById(newUser._id).select(
     "-password -refreshToken"
   );
-
   if (!user) throw new ApiError(500, "Error Occured While SignUp");
   // Sending Response
+  const userProgess=await Progress.create({
+    userId:user._id,
+  });
+
+  if(!userProgess) throw new ApiError(500,"Error Occured While Progressing")
   res.status(200).json(new ApiResponse(200, user, "User SignUp Successfully"));
 });
 

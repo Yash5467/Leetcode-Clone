@@ -6,6 +6,7 @@ import cookieParsor from 'cookie-parser'
 import { codeRouter } from './routes/code.routes.js';
 import { problemRouter } from './routes/problem.routes.js';
 import dotenv from 'dotenv'
+import { progressRouter } from './routes/progress.routes.js';
 dotenv.config();
 const app=express();
 
@@ -23,8 +24,13 @@ app.use(express.urlencoded({extended: true}))
 
 // user router 
 app.use("/user",upload.single("avatar"),userRouter);
+//code routes
 app.use("/code",codeRouter);
+//problem routes
 app.use("/problem",problemRouter);
+//progress route
+app.use("/progress",progressRouter);
+
 
 
 export{

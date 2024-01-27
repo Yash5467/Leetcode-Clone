@@ -6,7 +6,15 @@ const progressSchema=new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref:"User"
     },
-    problemsSolved:{
+    easy:{
+        type: Number,
+        default :0
+    },
+    medium:{
+        type: Number,
+        default :0
+    },
+    hard:{
         type: Number,
         default :0
     },
