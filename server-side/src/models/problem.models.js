@@ -30,7 +30,20 @@ const problemSchema=new mongoose.Schema({
     solution: {
         type: String,
         required : true
+    },  
+   constraints: {
+         type: String,
+         required: true
+    } ,
+    likes:{
+        type: Number,
+        default: 0
     },
+    dislikes:{
+        type:Number,
+        default: 0
+    }
+    ,
     testCases:[
         {
             type: mongoose.Types.ObjectId
