@@ -12,7 +12,7 @@ function App() {
 useEffect(()=>{
     authService.vefifyLogin()
     .then((data)=>{
-    dispatch(login(data.data));
+    dispatch(login({userData:data.data}));
     })
     .catch((error)=>{
       throw error

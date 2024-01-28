@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { Home, Problem ,ProblemEditor} from "./pages/pages.js";
+import { Home, LoginPage, Problem ,ProblemEditor, SignupPage} from "./pages/pages.js";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js";
@@ -23,6 +23,14 @@ const router = createBrowserRouter([
       {
         path:"/problems/:problemId",
         element:<ProblemEditor/>
+      },
+      {
+        path:"/login",
+        element:<LoginPage/>
+      },
+      {
+        path:"/signup",
+        element:<SignupPage/>
       }
     ],
   },

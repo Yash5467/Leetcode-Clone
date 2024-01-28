@@ -46,7 +46,7 @@ function ProblemList() {
 
   return (
     <>
-      <div className="flex md:px-52 gap-5 mt-5 mb-5">
+      <div className="flex   gap-5 mt-5 mb-5">
         <div className="max-w-xs  ">
           <div className="relative flex items-center w-full h-9 rounded-lg focus-within:shadow-lg bg-dark-layer-1 overflow-hidden">
             <div className="grid place-items-center h-full w-9 text-gray-300">
@@ -98,9 +98,9 @@ function ProblemList() {
           </div>
         </div>
       </div>
-      <div className="md:px-52">
+      <div className="">
         <div className="relative overflow-x-auto ">
-          <table className="w-full max-w-[80%] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className="w-full  border-t-[1px]  border-dark-fill-2 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-white dark:bg-dark-layer-2 dark:text-dark-gray-6">
               <tr>
                 <th scope="col" className="px-6 py-3">
@@ -121,7 +121,7 @@ function ProblemList() {
               {problemList.map((problem, index) => (
                 <tr
                   key={index}
-                  className="odd:bg-white odd:dark:bg-dark-layer-2 even:bg-dark-fill-3 even:dark:bg-dark-fill-3 "
+                  className="odd:bg-white odd:dark:bg-dark-layer-2 even:bg-dark-fill-3 cursor-pointer even:dark:bg-dark-fill-3 "
                   onClick={()=>navigate(problem._id)}
                  
                 >

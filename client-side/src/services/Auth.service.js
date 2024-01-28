@@ -29,6 +29,9 @@ class AuthService {
         {
           email,
           password,
+          
+        },{
+          withCredentials:true
         }
       );
 
@@ -40,7 +43,11 @@ class AuthService {
   logout = async () => {
     try {
       const { data: data } = await axios.post(
-        import.meta.env.VITE_SERVER_ENDPOINT + "/user/logout"
+        import.meta.env.VITE_SERVER_ENDPOINT + "/user/logout",{
+        
+        },{
+          withCredentials:true
+        }
       );
     } catch (error) {}
   };
@@ -71,7 +78,7 @@ class AuthService {
   vefifyLogin = async () => {
     try {
       const { data: data } = await axios.get(
-        import.meta.env.VITE_SERVER_ENDPOINT + "/user/verify-login"
+        import.meta.env.VITE_SERVER_ENDPOINT + "/user/verify-login",{withCredentials:true,}
       );
       return data;
     } catch (error) {
